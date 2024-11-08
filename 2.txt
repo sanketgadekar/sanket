@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Registration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f4f4f9;
+      margin: 0;
+    }
+
+    .container {
+      width: 300px;
+      padding: 20px;
+      background-color: #ffffff;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .message {
+      margin-top: 10px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Register</h2>
+    <form id="registrationForm">
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button type="submit">Register</button>
+    </form>
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Get form data
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      // Create user object
+      const userData = {
+        username: username,
+        email: email,
+        password: password
+      };
+
+      // Save user to local storage
+      let usersArray = JSON.parse(localStorage.getItem('users')) || [];
+      usersArray.push(userData);
+      localStorage.setItem('users', JSON.stringify(usersArray));
+
+      // AJAX-like simulation of sending data
+      fakeAjaxRequest(userData, function(response) {
+        document.getElementById('message').textContent = response.message;
+      });
+
+      // Clear form
+      document.getElementById('registrationForm').reset();
+    });
+
+    // Simulated AJAX request
+    function fakeAjaxRequest(data, callback) {
+      // Simulating an AJAX request delay
+      setTimeout(function() {
+        console.log("User data sent to server:", data);
+        callback({ message: "Registration successful!" });
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>
